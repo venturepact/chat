@@ -1,0 +1,91 @@
+ body {
+   padding-left: 0;
+   padding-right: 0;
+ }
+ /* This makes absolutely positioned elements like p, h1,
+     and some bootstrap elements placed properly. */
+ #absolute-wrapper p, #absolute-wrapper h1, #absolute-wrapper h2, #absolute-wrapper h3, #absolute-wrapper h4, #absolute-wrapper h5, #absolute-wrapper h6 {
+   margin-top: 0 !important;
+ }
+ #absolute-wrapper {
+   position: relative;
+   width: 980px;
+   margin: 0 auto;
+   height: 1px;
+ }
+ #absolute-wrapper .image {
+   width: 24px;
+   height: 24px;
+   position: absolute;
+   top: 490px;
+   left: 445px;
+ }
+ .container-fluid .well.well-1 {
+   background: transparent;
+   border-radius: 0px;
+   border: none;
+ }
+ .container-fluid .well.well-2 {
+   -moz-box-shadow: none;
+   -webkit-box-shadow: none;
+   -o-box-shadow: none;
+   box-shadow: none;
+ }
+ .container-fluid .well.well-3 {
+   padding: 10px;
+ }
+ .container-fluid .well.well-4 {
+   margin: 0px;
+ }
+ .container-fluid .well.well-5 {
+   padding: 0px;
+ }
+ .container-fluid .well.well-6 {
+   background: #eeeeee;
+   border: 1px solid #dedede;
+ }
+ .container-fluid .well.well-7 {
+   background: #e6f4f9;
+   border: 1px solid #d0ebf4;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .heading {
+   margin: 0px;
+   border-radius: 5px 5px 0px 0px;
+   padding: 5px 7px 5px 7px;
+   background: #f08163;
+   font-weight: normal;
+   color: #ffffff;
+   border: 1px solid #ea5d41;
+   font-size: 20px;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .well.well-8 {
+   border-radius: 0px 0px 5px 5px;
+   background: #fcfcfc;
+   border: 1px solid #ececec;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .well.well-8 .row-fluid .span12 .well.well-1.well-2.well-4.well-5 .row-fluid .span12 .well.well-2.well-3.well-4.well-6 p {
+   margin: 0px;
+   font-weight: bold;
+   font-size: 13px;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .well.well-8 .row-fluid .span12 .well.well-1.well-2.well-4.well-5 .row-fluid .span12 .well.well-1.well-2.well-4.well-5 p {
+   font-size: 11px;
+   color: #aaaaaa;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .well.well-8 .row-fluid .span12 .well.well-1.well-2.well-4.well-5 .row-fluid .span12 .well.well-2.well-3.well-4.well-7 p {
+   margin: 0px;
+   font-weight: bold;
+   font-size: 13px;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .row-fluid .span6 .well.well-1.well-2.well-5 .span12 {
+   border: 1px solid #dddddd;
+   height: 100px;
+ }
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .row-fluid .span6 .well.well-1.well-2.well-5 .btn {
+   background: #ea5d41;
+   padding: 7px 20px 7px 20px;
+   color: #ffffff;
+   text-shadow: 0px 1px 1px rgba(130, 130, 130, 0);
+   font-weight: bold;
+   font-size: 12px;
+ }
