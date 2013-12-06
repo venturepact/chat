@@ -11,25 +11,13 @@
     <link href="stylesheets/fontawesome.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/project.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/index.css" media="screen" rel="stylesheet" type="text/css" />
-	
+
+    <!-- Typekit fonts require an account and a kit containing the fonts used. see https://typekit.com/plans for details. <script type="text/javascript" src="//use.typekit.net/YOUR_KIT_ID.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+-->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
-	<style type="text/css">
-	#message-list
-	{
-		width:250px;
-		height:300px;
-	}
-	
-	#message-input
-	{
-		width:200px;
-	}
-	
-	
-	</style>
-	
-    <title>Chat</title>
+    <title>index</title>
 </head>
 
 <body>
@@ -39,14 +27,11 @@
             <div class="row-fluid">
                 <span class="span12">
                     <div id="message-list" class="well well-8">
-                        <div class="row-fluid">
-                            <span class="span12"></span>
-                        </div>
                     </div>
                     <div class="row-fluid">
-                        <span class="span6">
+                        <span class="span12">
                             <div class="well well-1 well-2 well-5">
-                                <textarea placeholder="" id="message-input" class="span12" name=""></textarea>
+                                <input placeholder="" id="message-input" class="span12" name=""></input>
                             </div>
                         </span>
                         <span class="span6">
@@ -64,8 +49,8 @@
         var messageCache = [{            // Create a local variable to store messages
             user: "Admin",               // Add the initial entry where the user is named Admin
             message: "Hello, world!",     // Add the initial entry with message "Hello, World!"
-            datetime: new Date()
-        }];
+            datetime: showdate()
+        }];	
 
         function addMessage(data) {
             var entry = null; //Create a local variable 'entry' and assign null to the variable.
@@ -79,9 +64,9 @@
 
             entry = entry.replace('{{USER}}', data['user']); //Replace the string '{{USER}}' with the array value data['user'] and store in the local variable 'entry'.
             entry = entry.replace('{{MESSAGE}}', data['message']); //Replace the string '{{MESSAGE}}' with the array value data['message'] and store in the local variable 'entry'.
-            entry = entry.replace('{{DATETIME}}', new Date()); //Replace the string '{{MESSAGE}}' with current date and time and store in the local variable 'entry'.
+            entry = entry.replace('{{DATETIME}}', showdate()); //Replace the string '{{MESSAGE}}' with current date and time and store in the local variable 'entry'.
             $('#message-list').append(entry); //Append the value stored in variable 'entry' into the element(here div) 'message-list'.	
-            $('#message-list div.row-fluid:last').hide().fadeIn(1700); //Get the last div in the 'message-list', Having class 'row-fluid' and fadeIn after 1.7 sec.
+            $('#message-list div.row-fluid:last').hide().fadeIn(1700); //Get the last div in the 'message-list', Having class 'row-fluid'.
             messageCache.push(data); //Push the value of variable into the 'messageCache' array. This will add new value of 'data' into the array 'messageCache'.
         }
 
@@ -95,7 +80,7 @@
             }
             entry = entry.replace('{{USER}}', messageCache[0]['user']);
             entry = entry.replace('{{MESSAGE}}', messageCache[0]['message']);
-            entry = entry.replace('{{DATETIME}}', messageCache[0]['datetime']);
+            entry = entry.replace('{{DATETIME}}', showdate());
             $('#message-list').append(entry);
 
             $('#message-send').click(function () {
@@ -122,6 +107,19 @@
                 $('#message-send').click();
             }
         });
+		
+		function showdate()
+		{
+			var d = new Date();
+			minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes();
+			seconds = d.getSeconds().toString().length == 1 ? '0'+d.getSeconds() : d.getSeconds();
+			hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours();
+			ampm = d.getHours() >= 12 ? 'pm' : 'am';
+			months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+			days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+			return days[d.getDay()]+' '+months[d.getMonth()]+' '+d.getDate()+' '+d.getFullYear()+' '+hours+':'+minutes+':'+seconds+' '+ampm;
+		}
+		
     </script>
     <script type="text/template" id="message-template-admin">
 			<div class="row-fluid">

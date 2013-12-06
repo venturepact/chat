@@ -57,8 +57,9 @@
    color: #ffffff;
    border: 1px solid #ea5d41;
    font-size: 20px;
+   width: 274px;
  }
- .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .well.well-8 {
+ .container-fluid .well.well-1.well-2.well-3 .row-fluid .span3 .well.well-8 {
    border-radius: 0px 0px 5px 5px;
    background: #fcfcfc;
    border: 1px solid #ececec;
@@ -79,13 +80,57 @@
  }
  .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .row-fluid .span6 .well.well-1.well-2.well-5 .span12 {
    border: 1px solid #dddddd;
-   height: 100px;
+   min-height: 60px;
  }
  .container-fluid .well.well-1.well-2.well-3 .row-fluid .span12 .row-fluid .span6 .well.well-1.well-2.well-5 .btn {
    background: #ea5d41;
-   padding: 7px 20px 7px 20px;
+   padding: 7px 12px 7px 12px;
    color: #ffffff;
    text-shadow: 0px 1px 1px rgba(130, 130, 130, 0);
    font-weight: bold;
    font-size: 12px;
  }
+#message-input {
+    border: 1px solid #DDDDDD;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    margin-bottom: 0;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    width: 200px;
+	padding: 5px;
+}
+#message-input:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
+#message-list {
+    background: none repeat scroll 0 0 #FCFCFC;
+    border: 1px solid #ECECEC;
+    border-radius: 0 0 4px 4px;
+    min-height: 300px;
+    width: 250px;
+}
+.well-6 p {
+    color: #333333 !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+}
+.well-5 p{
+	font-weight: normal;
+	font-size: 10px;
+	color: #aaa;
+}
+.well-7 p{
+	color: #333333 !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+}
+#message-send {
+    background: none repeat scroll 0 0 #EA5D41;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    height: 120px;
+    text-shadow: 0 1px 1px rgba(130, 130, 130, 0);
+    width: 130px;
+}
