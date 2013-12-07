@@ -41,7 +41,7 @@
 <body>
     <div class="container-fluid">
         <div class="well well-1 well-2 well-3">
-            <h3 class="heading">Chat Now......</h3>
+            <h3 class="heading">Chat Now</h3>
             <div class="row-fluid">
                 <span id="main-region" class="span12">
                     <div id="message-list" class="well well-8">
@@ -69,130 +69,186 @@
  <script type="text/javascript">
   	
 	var messageCache = [{            // Create a local variable to store messages
-		USER: "Admin",               // Add the initial entry where the user is named Admin
-		MESSAGE: "Hello, world!",     // Add the initial entry with message "Hello, World!"
-		DATETIME:showdate()
+		user: "Admin",               // Add the initial entry where the user is named Admin
+		message: "Hello, world!",     // Add the initial entry with message "Hello, World!"
+		datetime:showdate()
     }];
 	
 	$(document).ready(function()
 	{
-		var ChatManager = new Marionette.Application();
+		var ChatManager = new Marionette.Application(); //Create a local variable ChatManager to store Application type.
 		
+		//Declare regions for various areas
 		ChatManager.addRegions({
 			mainRegion:"#main-region",
 			messageRegion:"#message-list",
 			actionRegion:"#action-list"
 		});
-						
+		
+		//Created model for Message
 		ChatManager.Message=Backbone.Model.extend({
 			defaults: {
-				USER:"Admin",
-				MESSAGE:"Hello, world!",
-				DATETIME:showdate()
+				user:"Admin",
+				message:"Hello, world!",
+				datetime:showdate()
 			}
 		});
 		
+		//Created a collection object with model
 		ChatManager.MessageCollection=Backbone.Collection.extend({
 			model:ChatManager.Message,
 			localStorage: new Backbone.LocalStorage("ChatManager-Message")
 		});
 		
+		//Created Message Collection object to store collection of messages.
 		var messages=new ChatManager.MessageCollection();
+		
+		//Created local variable to store the message. 
 		var cachedMessage="";
 		
+		//ItemView created for actions
 		ChatManager.ActionView=Marionette.ItemView.extend({
 			template:"#action-list",
 			events:{
-					"click #message-send":"addguestmessage",
-					"keypress #message-input":"checkenterkey"
+					"click #message-send":"addguestmessage", //Event for button click.
+					"keypress #message-input":"checkenterkey" //Event for input to add message on enter key.
 				   },
 			addguestmessage:function(){
+					//Create a message object, This will be used to add Guest message into the chat.
 					var message=new ChatManager.Message({
-						USER:"Guest",
-						MESSAGE:$('#message-input').val(),
-						DATETIME:showdate()
+						user:"Guest",
+						message:$('#message-input').val(),
+						datetime:showdate()
 					});
 					ChatManager.addMessage(message);
+					
+					//Create a message object, This will be used to add Admin message into the chat.
 					message=new ChatManager.Message({
-						USER:"Admin",
-						MESSAGE:cachedMessage,
-						DATETIME:showdate()
+						user:"Admin",
+						message:cachedMessage,
+						datetime:showdate()
 					});
-					setTimeout(function(){ChatManager.addMessage(message)}, 1000);	
+					
+					//Show Admin message after 1 sec.
+					var t=setTimeout(function(){ChatManager.addMessage(message)}, 1000);	s
 			},
 			checkenterkey:function(e){
 				if (!e) e = window.event;
 				var keyCode = e.keyCode || e.which;
 				if (keyCode == '13')
 				{
+					//Create a message object, This will be used to add Guest message into the chat.
 					var message=new ChatManager.Message({
-						USER:"Guest",
-						MESSAGE:$('#message-input').val()
+						user:"Guest",
+						message:$('#message-input').val(),
+						datetime:showdate()
 					});
 					ChatManager.addMessage(message);
+					
+					//Add Admin message into the chat.
 					message=new ChatManager.Message({
-						USER:"Admin",
-						MESSAGE:cachedMessage,
-						DATETIME:showdate()
+						user:"Admin",
+						message:cachedMessage,
+						datetime:showdate()
 					});
-					setTimeout(function(){ChatManager.addMessage(message);}, 1000);
+					
+					//Show Admin message after 1 sec.
+					var t=setTimeout(function(){ChatManager.addMessage(message);}, 1000);
 				}
 			}
 		});
 		
+		//Created ItemView for admin template
 		ChatManager.MessagesItemView=Marionette.ItemView.extend({
 			template:"#message-template-admin"
 		});
 		
+		//Created ItemView for guest template
 		ChatManager.MessagesItemViewGuest=Marionette.ItemView.extend({
 			template:"#message-template-guest"
 		});
 		
-
+		//Collection View created and onRender to add animation affect on addition of new message.
 		ChatManager.MessagesView=Marionette.CollectionView.extend({
 			itemView:ChatManager.MessagesItemView,
 			onRender: function() {
-									(this.$el).find('div:last').hide().fadeIn(1700);
+									(this.$el).find('div:last').hide().fadeIn(1700);  //Fade In effect for last message.
 								 }
 		});
-				
+		
+		//Event for initialize after event for adding collection and adding views in the regions.
 		ChatManager.on("initialize:after",function(){
+			
+			//Clear Localstorage
+			//localStorage.removeItem("ChatManager-Message");
+			//localStorage.clear();
+			
+			//Default message to be displayed in the chat.
 			var message=new ChatManager.Message({
-											USER:"Admin",
-											MESSAGE:"Hello, world!"
+											user:"Admin",
+											message:"Hello, world!",
+											datetime:showdate()
 									});
-									
 			messages.add(message);
+			
+			//Crated a collection object, This will store the collection from the local Storage.
+			var c=new Backbone.Collection();
+			
+			//Created a new local variable ls which will store the local storage data collection.
+			var ls = new Backbone.LocalStorage("ChatManager-Message");
+			c=ls.findAll();
+
+			//Loop to add all the local storage objects in the messages collection.
+			for(i=0;i<c.length;i++)
+			{
+				var msg=new ChatManager.Message({
+					user:c[i].user,
+					message:c[i].message,
+					datetime:c[i].datetime
+				});
+				messages.add(msg);
+			}		
+			
+			//Assign the collection messages to View.
 			var messageListView=new ChatManager.MessagesView({
 				collection:messages
 			});
 			
+			//Created View for action area.
 			var actionView=new ChatManager.ActionView();
 			
 			ChatManager.messageRegion.show(messageListView);
 			ChatManager.actionRegion.show(actionView);
+			
+			//To maintain scroll position of chat list.
+			var div = $('div');
+			$('#message-list').scrollTop(div.get(0).scrollHeight);
 		});
 		
+		//Created addMessage to add message to collection object and display the collection in the region.
 		ChatManager.addMessage=function(message)
 		{
-					messages.add(message);
+					messages.add(message);//Add message object to the collection messages.
 					message.save(); //Save to localstorage
 					
-					cachedMessage=$('#message-input').val();				
-
+					cachedMessage=$('#message-input').val();//Store the value of input into the local variable				
 					var messageListView=new ChatManager.MessagesView({
-										collection:messages
+										collection:messages,
+										template:"#message-template-guest"
 									});
 											
-					ChatManager.messageRegion.show(messageListView);
+					ChatManager.messageRegion.show(messageListView);//Show the messageRegion value.
 					
-					$('#message-input').val("");
+					$('#message-input').val("");//Clear the value of input after the message has been added.
+					
+					//To maintain scroll position of chat list.
 					var div = $('div');
 					$('#message-list').scrollTop(div.get(0).scrollHeight);
 		}
-		
-		ChatManager.start();	
+		ChatManager.start();
 	});
+	
+	//Created showdate to return the date in the custom format.
 	function showdate()
 		{
 			var d = new Date();
@@ -213,14 +269,14 @@
                     <div class="row-fluid">
                       <span class="span12">
                         <div class="well pull-left well-2 well-3 well-4 well-6">
-                          <p><%= USER %>: <%= MESSAGE %></p>
+                          <p><%= user %>:</p> <%= message %>
                         </div>
                       </span>
                     </div>
                     <div class="row-fluid">
                       <span class="span12">
                         <div class="well pull-left well-1 well-2 well-4 well-5">
-                          <p>Sent at <%= DATETIME %></p>
+                          <p>Sent at <%= datetime %></p>
                         </div>
                       </span>
                     </div>
@@ -236,14 +292,14 @@
                     <div class="row-fluid">
                       <span class="span12">
                         <div class="well pull-right well-2 well-3 well-4 well-7">
-                          <p><%= USER %>: <%= MESSAGE %></p>
+                          <p><%= user %>:</p> <%= message %>
                         </div>
                       </span>
                     </div>
                     <div class="row-fluid">
                       <span class="span12">
                         <div class="well pull-right well-1 well-2 well-4 well-5">
-                          <p>Sent at <%= DATETIME %></p>
+                          <p>Sent at <%= datetime %></p>
                         </div>
                       </span>
                     </div>
